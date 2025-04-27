@@ -1,0 +1,3 @@
+<p>User Name: {{ user?.name }}</p>
+<p>User Email: {{ user?.email }}</p>
+<button (click)="userSelected.emit(user?.email)">Select User</button>
