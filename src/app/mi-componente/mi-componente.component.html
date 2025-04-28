@@ -6,3 +6,35 @@
 <button (click)="incrementAndNotify()">Increment and Notify</button>
 
 <p>Parent Message: {{ parentMessage }}</p>
+
+<button (click)="toggleSecretMessage()">Toggle Secret Message</button>
+<p *ngIf="showSecretMessage">This is a secret message!</p>
+<div *ngIf="showSecretMessage; else notSecretMessage">
+  This shows when showSecretMessage is true
+</div>
+<ng-template #notSecretMessage>
+  <p>This shows when showSecretMessage is false</p>
+</ng-template>
+
+<div [ngClass]="divClassNames">This div use ngClass with an objet.</div>
+
+<p [ngClass]="'highlighted border'">This paragraph use ngClass with string.</p>
+
+<span [ngClass]="important ? 'highlighted' : ''"
+  >Highlighted this text if this.important is true.</span
+>
+
+<button [ngClass]="{ 'bg-error': hasError, border: true }">Button</button>
+
+<p [ngStyle]="paragraphStyle">
+  This paragraph has dynamic styles with ngStyle.
+</p>
+
+<div
+  [ngStyle]="{
+    'background-color': hasError ? 'yellow' : 'lightblue',
+    'padding.px': 15
+  }"
+>
+  Div with conditional styles inline (ngStyle).
+</div>
