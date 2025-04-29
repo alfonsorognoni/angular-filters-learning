@@ -47,6 +47,15 @@
           {{ task.description }} {{ task.done ? "Completed" : "" }}
         </li>
       </ul>
+      <p>Add Task</p>
+      {{ taskDescription }}
+      <input
+        type="text"
+        [(ngModel)]="taskDescription"
+        id="taskDescription"
+        placeholder="Task Description"
+      />
+      <button (click)="createNewTask(taskDescription)">Add</button>
     </div>
   </div>
 </main>

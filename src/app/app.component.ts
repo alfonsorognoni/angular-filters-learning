@@ -3,6 +3,8 @@ import { RouterOutlet } from '@angular/router';
 import { MiComponenteComponent } from './mi-componente/mi-componente.component';
 import { User, UserCardComponent } from './user-card/user-card.component';
 import { CommonModule } from '@angular/common';
+import { TaskManagementService } from './services/task-management.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     MiComponenteComponent,
     UserCardComponent,
+    FormsModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -18,7 +21,8 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   title = 'filters';
   messageFromChild: string = '';
-  showTasks: boolean = false;
+  showTasks: boolean = true;
+  taskDescription: string = '';
 
   users: User[] = [
     { name: 'John', email: 'john@example.com' },
@@ -36,11 +40,13 @@ export class AppComponent {
     'Saturday',
   ];
 
-  tasks: { id: number; description: string; done: boolean }[] = [
-    { id: 1, description: 'Aprender Componentes', done: true },
-    { id: 2, description: 'Aprender Directivas', done: false },
-    { id: 3, description: 'Practicar Data Binding', done: false },
-  ];
+  tasks: { id: number; description: string; done: boolean }[] = [];
+
+  constructor(private tasksService: TaskManagementService) {}
+
+  ngOnInit(): void {
+    this.tasks = this.tasksService.getTasks();
+  }
 
   childEventHandler(messageFromChild: string) {
     console.log(`Message from child: ${messageFromChild}`);
@@ -53,5 +59,11 @@ export class AppComponent {
 
   toggleShowTasks() {
     this.showTasks = !this.showTasks;
+  }
+
+  createNewTask(description: string) {
+    if (description) {
+      this.tasksService.addTask(description);
+    }
   }
 }
