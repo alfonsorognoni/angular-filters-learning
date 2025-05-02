@@ -13,5 +13,5 @@ export interface User {
 })
 export class UserCardComponent {
   @Input() user: User | null = null;
-  @Output() userSelected = new EventEmitter<User['email']>();
+  @Output() userSelected = new EventEmitter<User>();
 }

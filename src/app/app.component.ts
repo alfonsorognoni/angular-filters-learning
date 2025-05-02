@@ -5,6 +5,7 @@ import { User, UserCardComponent } from './user-card/user-card.component';
 import { CommonModule } from '@angular/common';
 import { TaskManagementService } from './services/task-management.service';
 import { FormsModule } from '@angular/forms';
+import { UserInformationService } from './services/user-information/user-information.service';
 
 @Component({
   selector: 'app-root',
@@ -24,12 +25,6 @@ export class AppComponent {
   showTasks: boolean = true;
   taskDescription: string = '';
 
-  users: User[] = [
-    { name: 'John', email: 'john@example.com' },
-    { name: 'Jane', email: 'jane@example.com' },
-    { name: 'Bob', email: 'bob@example.com' },
-  ];
-
   daysOfTheWeek: string[] = [
     'Sunday',
     'Monday',
@@ -42,10 +37,16 @@ export class AppComponent {
 
   tasks: { id: number; description: string; done: boolean }[] = [];
 
-  constructor(private tasksService: TaskManagementService) {}
+  users: User[] = [];
+
+  constructor(
+    private tasksService: TaskManagementService,
+    private userInformationService: UserInformationService
+  ) {}
 
   ngOnInit(): void {
     this.tasks = this.tasksService.getTasks();
+    this.users = this.userInformationService.getUsers();
   }
 
   childEventHandler(messageFromChild: string) {
@@ -53,8 +54,8 @@ export class AppComponent {
     this.messageFromChild = messageFromChild;
   }
 
-  userSelectedHandler(userEmail: User['email']) {
-    console.log(`User selected email: ${userEmail}`);
+  userSelectedHandler(user: User) {
+    console.log(`User selected email: ${user.email}`);
   }
 
   toggleShowTasks() {
